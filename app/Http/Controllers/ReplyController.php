@@ -12,6 +12,23 @@ use App\Http\Resources\ReplyResource;
 
 class ReplyController extends Controller
 {
+
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('auth:api', ['except' => ['login']]); // default
+        // $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+        $this->middleware('JWT', ['except' => ['index', 'show']]);  // middleware buatan baru,
+        // selain dari pada didlm except tidak bisa digunakan function nya harus pake token JWT
+        // yang di except bisa diakses tanpa token
+
+    }
+
+    
     /**
      * Display a listing of the resource.
      *
