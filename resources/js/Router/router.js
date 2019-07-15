@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-
+import Login from '../components/login/Login'
 
 // 2. Define some routes
 // Each route should map to a component. The "component" can
@@ -10,7 +10,7 @@ Vue.use(VueRouter)
 // `Vue.extend()`, or just a component options object.
 // We'll talk about nested routes later.
 const routes = [
-  // { path: '/login', component: Login }
+  { path: '/login', component: Login }
 ]
 
 
@@ -18,7 +18,9 @@ const routes = [
 // You can pass in additional options here, but let's
 // keep it simple for now.
 const router = new VueRouter({
-  routes // short for `routes: routes`
+  routes, // short for `routes: routes`
+  hashbang: false, // menghilangkan # pada url
+  mode: 'history'
 })
 
 export default router

@@ -1,19 +1,23 @@
 <template>
   <div class="">
     <toolbar></toolbar>
-    <app-footer></app-footer>    
+    <router-view></router-view>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script type="text/javascript">
 import toolbar from './Toolbar'
 import AppFooter from './AppFooter'
+import Login from './login/Login'
+
 
 
   export default {
     components:{
       toolbar,
-      AppFooter
+      AppFooter,
+      Login
 
     }
 
