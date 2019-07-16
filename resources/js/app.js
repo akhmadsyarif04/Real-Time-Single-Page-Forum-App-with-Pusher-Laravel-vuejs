@@ -11,6 +11,15 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
+
+import User from './Helper/User'
+window.User = User // inisialisasi untuk Helper/User.js pada login.vue
+
+// console.log(User.loggedIn())
+// User.logout()
+console.log(User.id())
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
