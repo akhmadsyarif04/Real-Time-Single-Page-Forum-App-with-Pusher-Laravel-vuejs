@@ -17,8 +17,11 @@ window.User = User // inisialisasi untuk Helper/User.js pada login.vue
 
 // console.log(User.loggedIn())
 // User.logout()
-console.log(User.id())
+// console.log(User.id())
 
+// console.log(User.loggedIn())
+
+window.EventBus = new Vue();
 
 /**
  * The following block of code may be used to automatically register your

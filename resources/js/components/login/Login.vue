@@ -21,6 +21,10 @@
           Login
         </v-btn>
 
+        <router-link to="/signup">
+          <v-btn color="blue">Sign Up</v-btn>
+        </router-link>
+
     </form>
   </v-container>
 </template>
@@ -34,6 +38,13 @@
           password: null
         }
       }
+    },
+    created() {
+      if (User.loggedIn()) {
+          this.$router.push({name: 'forum'})
+      }
+      // jadi ini akan riderect jika loggedIn nilai true
+
     },
     methods: {
       login ()
