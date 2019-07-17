@@ -12,8 +12,14 @@ import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
 
+import VueSimplemde from 'vue-simplemde'
+Vue.use(VueSimplemde)
+import md from 'marked'
+window.md = md
+
 import User from './Helper/User'
 window.User = User // inisialisasi untuk Helper/User.js pada login.vue
+
 
 // console.log(User.loggedIn())
 // User.logout()
