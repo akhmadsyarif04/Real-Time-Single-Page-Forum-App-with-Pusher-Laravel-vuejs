@@ -44,7 +44,8 @@ export default {
   props:['data','index'],
   data(){
     return{
-      editing:false
+      editing:false,
+      beforeEditReplyBody:'',
     }
   },
   computed: {
@@ -64,10 +65,17 @@ export default {
     },
     edit(){
       this.editing = true
+      // mengatasi bug pada edit dan cancel reply
+      this.beforeEditReplyBody = this.data.reply
     },
     listen(){
-      EventBus.$on('cancelEditing', ()=>{
+      EventBus.$on('cancelEditing', (reply)=>{
         this.editing = false
+        // mengatasi bug pada edit dan cancel reply
+        if (reply !== this.data.reply) {
+          this.data.reply = this.beforeEditReplyBody
+          this.beforeEditReplyBody = ''
+        }
       })
     }
   }

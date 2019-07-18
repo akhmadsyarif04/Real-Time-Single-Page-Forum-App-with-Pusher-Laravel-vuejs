@@ -2576,8 +2576,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['reply'],
   methods: {
-    cancel: function cancel() {
-      EventBus.$emit('cancelEditing');
+    cancel: function cancel(reply) {
+      EventBus.$emit('cancelEditing', reply);
     },
     update: function update() {
       var _this = this;
@@ -2585,7 +2585,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch("/api/question/".concat(this.reply.questions_slug, "/reply/").concat(this.reply.id), {
         body: this.reply.reply
       }).then(function (res) {
-        return _this.cancel();
+        return _this.cancel(_this.reply.reply);
       });
     }
   }
@@ -2752,7 +2752,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['data', 'index'],
   data: function data() {
     return {
-      editing: false
+      editing: false,
+      beforeEditReplyBody: ''
     };
   },
   computed: {
@@ -2771,13 +2772,20 @@ __webpack_require__.r(__webpack_exports__);
       EventBus.$emit('deleteReply', this.index);
     },
     edit: function edit() {
-      this.editing = true;
+      this.editing = true; // mengatasi bug pada edit dan cancel reply
+
+      this.beforeEditReplyBody = this.data.reply;
     },
     listen: function listen() {
       var _this = this;
 
-      EventBus.$on('cancelEditing', function () {
-        _this.editing = false;
+      EventBus.$on('cancelEditing', function (reply) {
+        _this.editing = false; // mengatasi bug pada edit dan cancel reply
+
+        if (reply !== _this.data.reply) {
+          _this.data.reply = _this.beforeEditReplyBody;
+          _this.beforeEditReplyBody = '';
+        }
       });
     }
   }
