@@ -19,6 +19,8 @@ class QuestionResource extends JsonResource
           'slug' => $this->slug,
           'path' => $this->path,
           'body' => $this->body,
+          'replies' => ReplyResource::collection($this->replies),
+          'replies_count' => $this->replies->count(),
           'created_at' => $this->created_at->diffForHumans(),
           'user' => $this->user->name, // ambil dari function user yang ada pada models questions yg telah direlasikan
           'user_id' => $this->user_id
