@@ -8,7 +8,7 @@ import Forum from '../components/forum/forum'
 import Read from '../components/forum/read'
 import Create from '../components/forum/create'
 import Logout from '../components/login/Logout'
-
+import CreateCategory from '../components/category/CreateCategory'
 
 // 2. Define some routes
 // Each route should map to a component. The "component" can
@@ -19,10 +19,12 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/signup', component: signUp },
   { path: '/logout', component: Logout },
+  { path: '/category', component: CreateCategory },
+
   { path: '/forum', component: Forum, name: 'forum' },
   { path: '/ask', component: Create },
-
   { path: '/question/:slug', component: Read, name: 'read' },
+
 ]
 
 
