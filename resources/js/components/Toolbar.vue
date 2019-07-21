@@ -2,6 +2,7 @@
   <v-toolbar>
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>KilluBlog</v-toolbar-title>
+    <app-notification v-if="loggedIn"></app-notification>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
       <!-- <router-link to="/forum">
@@ -24,9 +25,12 @@
 </template>
 
 <script type="text/javascript">
+import AppNotification from './AppNotification'
   export default {
+    components:{AppNotification},
     data() {
       return {
+        loggedIn: User.loggedIn(),
         items: [
           {title: 'Forum', to: '/forum', show: true},
           {title: 'Ask Question', to: '/ask', show: User.loggedIn()},
