@@ -21,6 +21,9 @@ window.md = md
 import User from './Helper/User'
 window.User = User // inisialisasi untuk Helper/User.js pada login.vue
 
+import Exception from './Helper/Exception'
+window.Exception = Exception // inisialisasi untuk Helper/User.js pada login.vue
+
 
 // console.log(User.loggedIn())
 // User.logout()
