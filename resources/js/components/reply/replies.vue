@@ -24,6 +24,7 @@ export default {
   },
   methods:{
     listen(){
+      // console.log(content)
       EventBus.$on('newReply', (reply) => {
         this.content.unshift(reply)
       })
@@ -37,10 +38,10 @@ export default {
       // pusher untuk reply
       Echo.private('App.User.' + User.id())
           .notification((notification) => {
-              // console.log(notification.type);
               this.content.unshift(notification.reply)
           });
 
+      // pusher
       Echo.channel('deleteReplyChannel')
       .listen('DeleteReplyEvent', (e) => {
         // console.log(e)
@@ -49,7 +50,7 @@ export default {
             this.content.splice(index, 1)
           }
         }
-      })
+      });
 
     }
   }
