@@ -1,7 +1,11 @@
 <template>
   <v-toolbar>
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
-    <v-toolbar-title>KilluBlog</v-toolbar-title>
+    <v-toolbar-title>
+      <router-link to="/">
+        KilluBlog
+      </router-link>
+    </v-toolbar-title>
     <app-notification v-if="loggedIn"></app-notification>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">

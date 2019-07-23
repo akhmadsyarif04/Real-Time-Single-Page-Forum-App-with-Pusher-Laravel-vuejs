@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-alert
+      :value="true"
+      type="error"
+      v-if="errors"
+    >
+      Please give  category name
+    </v-alert>
     <v-form @submit.prevent="submit">
       <v-text-field
         label="Category Name"
@@ -12,6 +19,7 @@
                 color="pink"
                 type="submit"
                 v-if="editSlug"
+                :disabled="distable"
               >
                 Update
               </v-btn>
@@ -19,6 +27,7 @@
                 color="teal"
                 type="submit"
                 v-else
+                :disabled="distable"
               >
                 Create
               </v-btn>
@@ -70,7 +79,8 @@ export default {
         name: null
       },
       Categories: {},
-      editSlug: null
+      editSlug: null,
+      errors:null
     }
   },
   created(){
@@ -99,6 +109,8 @@ export default {
         this.Categories.unshift(res.data)
         this.form.name = null
       })
+      .catch(error => this.errors = error.response.data.errors)
+
     },
     destroy(slug, index){
       axios.delete(`/api/category/${slug}`)
@@ -108,6 +120,11 @@ export default {
       this.form.name = this.Categories[index].name
       this.editSlug = this.Categories[index].slug
       this.Categories.splice(index,1)
+    }
+  },
+  computed:{
+    distable(){
+      return !(this.form.name)
     }
   }
 }
