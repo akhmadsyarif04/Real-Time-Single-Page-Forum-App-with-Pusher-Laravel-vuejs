@@ -9,6 +9,15 @@
           :data="question"
         >
         </question>
+
+        <div class="text-xs-center">
+            <v-pagination
+              v-model="meta.current_page"
+              :length="meta.last_page"
+              @input="changePage"
+            ></v-pagination>
+        </div>
+
       </v-flex>
 
       <v-flex xs4>
@@ -26,7 +35,8 @@
   export default {
     data(){
       return {
-        questions: []
+        questions: [],
+        meta:{}
       }
     },
     components: {
@@ -34,9 +44,25 @@
       AppSidebar
     },
     created() {
-      axios.get('/api/question')
-      .then(res => this.questions = res.data.data)
-      .catch(error => console.log(error.response.data))
+      this.fecthQuestions()
+    },
+    methods:{
+      fecthQuestions() {
+        axios.get('/api/question')
+        .then(res => {
+          this.meta = res.data.meta
+          this.questions = res.data.data
+        })
+        .catch(error => console.log(error.response.data))
+      },
+      changePage(page){
+        axios.get(`/api/question?page=${page}`)
+        .then(res => {
+          this.meta = res.data.meta
+          this.questions = res.data.data
+        })
+        .catch(error => console.log(error.response.data))
+      }
     }
   }
 </script>

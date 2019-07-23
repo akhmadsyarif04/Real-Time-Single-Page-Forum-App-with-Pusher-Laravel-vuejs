@@ -65,7 +65,7 @@ export default {
   },
   computed:{
     distable(){
-      // return !(this.form.title && this.form.body && this.form.category_id)
+      return !(this.form.title && this.form.body && this.form.category_id)
     }
   }
 }

@@ -34,7 +34,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        return QuestionResource::collection(Question::latest()->get()); // agar mengikuti aturan dari resource
+        return  QuestionResource::collection(Question::latest()->paginate(2)); // agar mengikuti aturan dari resource
     }
 
     /**
@@ -58,7 +58,7 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(QuestionRequest $question)
+    public function show(Question $question)
     {
         return new QuestionResource($question);
     }

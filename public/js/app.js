@@ -1770,7 +1770,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       read: {},
       unread: {},
-      unreadCount: 0
+      unreadCount: 0,
+      sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3"
     };
   },
   created: function created() {
@@ -1783,12 +1784,27 @@ __webpack_require__.r(__webpack_exports__);
 
     Echo["private"]('App.User.' + User.id()).notification(function (notification) {
       // console.log(notification.type);
+      _this.playSound();
+
       _this.unread.unshift(notification);
 
       _this.unreadCount++;
     });
   },
   methods: {
+    playSound: function playSound() {
+      var alert = new Audio(this.sound);
+      var playedPromise = alert.play();
+
+      if (playedPromise !== undefined) {
+        playedPromise.then(function (_) {
+          // Autoplay started!
+          alert.play();
+        })["catch"](function (error) {// Autoplay was prevented.
+          // Show a "Play" button so that user can start playback.
+        });
+      }
+    },
     getNotifications: function getNotifications() {
       var _this2 = this;
 
@@ -2269,7 +2285,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    distable: function distable() {// return !(this.form.title && this.form.body && this.form.category_id)
+    distable: function distable() {
+      return !(this.form.title && this.form.body && this.form.category_id);
     }
   }
 });
@@ -2379,12 +2396,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      questions: []
+      questions: [],
+      meta: {}
     };
   },
   components: {
@@ -2392,13 +2419,29 @@ __webpack_require__.r(__webpack_exports__);
     AppSidebar: _AppSidebar__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
-    var _this = this;
+    this.fecthQuestions();
+  },
+  methods: {
+    fecthQuestions: function fecthQuestions() {
+      var _this = this;
 
-    axios.get('/api/question').then(function (res) {
-      return _this.questions = res.data.data;
-    })["catch"](function (error) {
-      return console.log(error.response.data);
-    });
+      axios.get('/api/question').then(function (res) {
+        _this.meta = res.data.meta;
+        _this.questions = res.data.data;
+      })["catch"](function (error) {
+        return console.log(error.response.data);
+      });
+    },
+    changePage: function changePage(page) {
+      var _this2 = this;
+
+      axios.get("/api/question?page=".concat(page)).then(function (res) {
+        _this2.meta = res.data.meta;
+        _this2.questions = res.data.data;
+      })["catch"](function (error) {
+        return console.log(error.response.data);
+      });
+    }
   }
 });
 
@@ -68919,13 +68962,34 @@ var render = function() {
           _c(
             "v-flex",
             { attrs: { xs8: "" } },
-            _vm._l(_vm.questions, function(question) {
-              return _c("question", {
-                key: question.path,
-                attrs: { data: question }
-              })
-            }),
-            1
+            [
+              _vm._l(_vm.questions, function(question) {
+                return _c("question", {
+                  key: question.path,
+                  attrs: { data: question }
+                })
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-xs-center" },
+                [
+                  _c("v-pagination", {
+                    attrs: { length: _vm.meta.last_page },
+                    on: { input: _vm.changePage },
+                    model: {
+                      value: _vm.meta.current_page,
+                      callback: function($$v) {
+                        _vm.$set(_vm.meta, "current_page", $$v)
+                      },
+                      expression: "meta.current_page"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            2
           ),
           _vm._v(" "),
           _c("v-flex", { attrs: { xs4: "" } }, [_c("app-sidebar")], 1)
@@ -110774,7 +110838,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _components_parallex__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/parallex */ "./resources/js/components/parallex.vue");
+/* harmony import */ var _components_parallex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/parallex */ "./resources/js/components/parallex.vue");
 /* harmony import */ var _components_login_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/login/Login */ "./resources/js/components/login/Login.vue");
 /* harmony import */ var _components_login_signUp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/login/signUp */ "./resources/js/components/login/signUp.vue");
 /* harmony import */ var _components_forum_forum__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forum/forum */ "./resources/js/components/forum/forum.vue");
@@ -110800,7 +110864,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 var routes = [{
   path: '/',
-  component: _components_parallex__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_parallex__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/login',
   component: _components_login_Login__WEBPACK_IMPORTED_MODULE_3__["default"]
